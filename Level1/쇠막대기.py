@@ -16,3 +16,4 @@ def solution(arrangement):
             else:
                 answer += sticks
     return answer
+
