@@ -24,3 +24,4 @@ def solution(bridge_length, weight, truck_weights):
             bridge.extend([0]*(idx+1))
             answer += idx
     return answer
+
