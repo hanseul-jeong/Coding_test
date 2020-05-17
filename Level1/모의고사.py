@@ -34,3 +34,4 @@ def solution(answers):
     else:
         return [1,2,3]
     return
+
