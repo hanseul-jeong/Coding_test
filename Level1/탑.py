@@ -20,3 +20,4 @@ def solution(heights):
                 break
         answer.append(receiver)
     return answer
+
