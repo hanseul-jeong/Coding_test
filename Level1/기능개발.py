@@ -29,3 +29,4 @@ def solution(progresses, speeds):
                 progress = d
     answer.append(cnt)
     return answer
+
