@@ -11,3 +11,4 @@ def solution(prices):
             if prices[pivot] > prices[cmp] :
                 break
     return answer
+
