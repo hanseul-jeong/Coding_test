@@ -20,3 +20,4 @@ def solution(participant, completion):
             answer = name
             break
     return answer
+
