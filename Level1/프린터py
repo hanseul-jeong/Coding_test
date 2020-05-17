@@ -21,3 +21,4 @@ def solution(priorities, location):
         rank += 1
         if l == location:
             return rank
+            
