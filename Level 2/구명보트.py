@@ -1,3 +1,21 @@
+def solution(people, limit):
+    people = sorted(people) # ascending
+    cnt = 0
+    start_idx = 0
+    end_idx = len(people)-1
+    while end_idx - start_idx+1 > 2 and people[start_idx] <= (limit/2.0):
+        if people[end_idx] + people[start_idx] <= limit:
+            start_idx += 1
+        end_idx -= 1
+        cnt += 1
+    if end_idx - start_idx == 0:
+        cnt += 1
+    elif people[start_idx] + people[end_idx] <= limit:
+        cnt += 1
+    else:
+        cnt += end_idx - start_idx + 1
+    return cnt
+
 # 시간초과...
 # def solution(people, limit):
 #     people = sorted(people) # ascending
