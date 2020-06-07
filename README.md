@@ -1,2 +1,2 @@
 # Coding_test
-practice for coding test (e.g., Programmers, Backjoon)
+practice for coding test (e.g., Programmers, Baekjoon)
