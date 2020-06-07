@@ -1,8 +1,6 @@
 // Union - Find << Data structure >>
 
 
-
-
 #include <iostream>
 
 using namespace std;
