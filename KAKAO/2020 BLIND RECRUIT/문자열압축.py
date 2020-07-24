@@ -1,4 +1,6 @@
 def solution(s):
+    if len(s) == 1: ###### 예외처리주의
+        return 1
     answer = [0]*(len(s)-1)
     for word_len in range(1, len(s)):
         length = [i for i in range(0, len(s), word_len)]
@@ -10,14 +12,22 @@ def solution(s):
             if start == w:
                 cnt += 1 
             else:
-                answer[word_len-1] += word_len + min(2, cnt) -1
+                if cnt == 1:
+                    n = 0
+                else:
+                    n = len(str(cnt))
+                answer[word_len-1] += word_len + n
                 start = w
                 cnt = 1
                 if answer[word_len-1] >= len(s):
                     break
-        answer[word_len-1] += len(word[-1]) + min(2, cnt)-1
+        if cnt == 1:
+            answer[word_len-1] += len(word[-1])
+        else:
+            answer[word_len-1] += len(word[-1]) + len(str(cnt))
     return min([min(answer), len(s)])
 
+#### number가 한자리일 수도 있고 여러자리도 가능.
 
 """
 문자열 압축
