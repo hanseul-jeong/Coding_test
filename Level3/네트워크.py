@@ -1,14 +1,6 @@
-def find_head(networks, idx):
-    indice = []
-    while(networks[idx] != idx):
-        indice.append(idx)
-        idx = networks[idx]
-    indice.append(idx)
-    return indice
 def union(networks, i,j):
-    if networks[i] != networks[j]:
-        heads = find_head(networks, j)
-        for idx in heads:
+    for idx in range(len(networks)):
+        if networks[idx] == j:
             networks[idx] = i
     return networks
 def solution(n, computers):
@@ -18,13 +10,37 @@ def solution(n, computers):
     for i in range(n-1):
         for j in range(i+1, n):
             if computers[i][j] == 1:
-                networks = union(networks, i,j)
-    answer = []
-    for idx in range(n):
-        heads = find_head(networks, idx)
-        if heads[-1] not in answer:
-            answer.append(heads[-1])
-    return len(answer)
+                head_i = networks[i]
+                head_j = networks[j]
+                networks = union(networks, head_i, head_j)
+    return len(list(set(networks)))
+# def find_head(networks, idx):
+#     indice = []
+#     while(networks[idx] != idx):
+#         indice.append(idx)
+#         idx = networks[idx]
+#     indice.append(idx)
+#     return indice
+# def union(networks, i,j):
+#     if networks[i] != networks[j]:
+#         heads = find_head(networks, j)
+#         for idx in heads:
+#             networks[idx] = i
+#     return networks
+# def solution(n, computers):
+#     if n ==1:
+#         return 1
+#     networks = [i for i in range(n)]
+#     for i in range(n-1):
+#         for j in range(i+1, n):
+#             if computers[i][j] == 1:
+#                 networks = union(networks, i,j)
+#     answer = []
+#     for idx in range(n):
+#         heads = find_head(networks, idx)
+#         if heads[-1] not in answer:
+#             answer.append(heads[-1])
+#     return len(answer)
     
     ## 아직 시간초과가 뜬다
     
