@@ -1,64 +1,53 @@
-routes= []
-def find_route(airport, lefts, itinerary):
-    if not lefts:
-        global routes
-        routes.append(itinerary + [airport])
-        return
+routes= []  # available routes
+import copy 
+def find_route(airport, lefts, itinerary): # recursive for finding itinerary
+    global routes
+    if not lefts:           # matched
+        routes.append(itinerary)
+        return 
     destinations = lefts.get(airport)
-    if not destinations:
-        return
-    for idx in range(len(destinations)):
-        dest = destinations.pop(idx)
-        if not destinations:
+    if not destinations:    # not matched
+        return 
+    for idx in range(len(destinations)):    # destination set
+        dest = destinations.pop(idx)    # choose destination
+        if not destinations:    # same airport doesn't exist
             del lefts[airport]
-        else:
+        else:                   # renewal left tickets
             lefts[airport] = destinations
-            destinations = destinations[:idx] + [dest] + destinations[idx:]
-        find_route(dest, lefts, itinerary + [dest])
+            destinations = destinations[:idx] + [dest] + destinations[idx:] # origin tickets (+ deleted tickets)
+        find_route(dest, copy.deepcopy(lefts), itinerary + [dest])
 def solution(tickets):
     lefts = {}
-    for dep, arr in tickets:
+    for dep, arr in tickets:    # change tickets {departure : arrival}
         if not lefts.get(dep):
             lefts[dep] = [arr]
         else:
             lefts[dep].append(arr)
-    tmp_lefts = lefts.copy()
-    destinations = tmp_lefts.get("ICN")
-    for idx in range(len(destinations)):
-        tmp_list = destinations.copy()
-        dest = tmp_list.pop(idx)
-        if not tmp_list:
-            del tmp_lefts["ICN"]
-        else:
-            tmp_lefts["ICN"] = tmp_list
-        print(tmp_lefts)
-        find_route(dest, tmp_lefts, ["ICN"] + [dest])
+    find_route("ICN", copy.deepcopy(lefts), ["ICN"])
+    # find min route in ascending order
     global routes
-    # import numpy as np
-    # routes = np.array(routes)
-    # (col, row) = np.shape(routes)
-    # candidates = range(1, col)
-    # for idx_row in range(1, row):
-    #     min = routes[0,idx_row]
-    #     for idx_col in candidates:
-    #         cand = routes[idx_col, idx_row]
-    #         if min > cand:
-    #             candidates = [idx_col]
-    #             min = cand
-    #         elif min == cand:
-    #             candidates.extend(idx_col)
-    #     if len(candidates) == 1:
-    #         break
-    # print(candidates)
-    return 0
-    # return routes[candidates[0]]
-    
-    
-    # dict의 값이 왜 변하는지 잘 모르겠다... python도 주소참조여서 그런가??ㅜㅜ
-    # 확인!!!!!!!!!!!!!!!!!!!!!!!!
-    
-    
-    
+    import numpy as np
+    routes = np.array(routes)
+    (col, row) = np.shape(routes)
+    candidates = list(range(col))   # idx of candidate route
+    for idx_row in range(1, row):
+        min = routes[candidates[0],idx_row]
+        tmp = [candidates[0]]
+        for idx_col in candidates[1:]:
+            cand = routes[idx_col, idx_row]
+            if min > cand:
+                tmp = [idx_col]
+                min = cand
+            elif min == cand:
+                tmp.append(idx_col)
+        candidates = tmp
+        if len(tmp) == 1:
+            break
+    return routes[candidates][0].tolist()
+
+    # left의 값이 계속 변하는 까닭에 deepcopy를 이용했다.
+    # 값 복사를 계속하다보니 비효율적인 것 같은데 이를 해결할 수 있는 방안은?
+
     """
     여행경로
   문제 설명
