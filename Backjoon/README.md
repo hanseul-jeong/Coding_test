@@ -2,7 +2,7 @@
 
 https://www.acmicpc.net/
 
-I mainly use C++ (because, i'm not used to input of python..)
+I mainly focus on C++
 
 I'm welcome any comments! 
 Thanks!
