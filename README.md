@@ -1,2 +1,5 @@
-# Coding_test
-practice for coding test (e.g., Programmers, Baekjoon)
+## Coding_test
+
+코딩테스트 준비용으로 Programmers와 Baekjoon 문제를 풀어보았습니다. (아직 풀고있는 문제도 포함되었습니다.)
+다른 접근법이나, 문제점에 대한 코멘트 환영입니다 :)
+
