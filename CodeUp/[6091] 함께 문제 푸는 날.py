@@ -9,7 +9,7 @@ ex) input  : 3 7 9
     output : 63
 '''
 
-# least common multiple (LED, 최소공배수)
+# least common multiple (LCM, 최소공배수)
 # greatest common divisor (GCD, 최대공약수)
 # 유클리드 호제법
 
@@ -19,10 +19,10 @@ def getGCD(x, y):
     while y:
         x, y = y, x % y
     return x
-def getLCD(x, y):
+def getLCM(x, y):
     return (x * y) // getGCD(x, y)
   
 inputs =  sorted(list(map(int, sys.stdin.readline().split())))
 
 from functools import reduce
-print(reduce(lambda x, y : getLCD(max([x, y]), min([x, y])), inputs))
+print(reduce(lambda x, y : getLCM(max([x, y]), min([x, y])), inputs))
