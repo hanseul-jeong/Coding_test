@@ -20,6 +20,7 @@ def isVPS(inputs):
             t = cands.pop() if len(cands) != 0 else ')'
             if t != '(':
                 return False
+    # CAUTION!!!!!
     if len(cands) == 0:
         return True
     else:
