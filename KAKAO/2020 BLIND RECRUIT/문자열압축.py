@@ -12,6 +12,31 @@
 
 """
 
+
+# 21.05.02 version.
+
+def countWord(q):
+    cnt = len(q[0]) + len(str(q[1])) if q[1] > 1 else len(q[0])
+    return cnt
+
+def solution(s):
+    cnts = []
+    for n in range(1, len(s)//2+1):  # sliding window 1, ..., len(s)//2
+        q = ['', 0] # repeat / count
+        n_word = 0
+        for k in range(0, len(s), n):
+            c = s[k:k+n]
+            if q[0] != c:
+                n_word += countWord(q)
+                q = [c,1]
+            else:
+                q[1] += 1
+        n_word += countWord(q)
+        cnts.append(n_word)
+    return min(cnts + [len(s)])
+
+
+# previous version.
 def solution(s):
     if len(s) == 1: ###### 예외처리주의
         return 1
@@ -46,24 +71,3 @@ def solution(s):
 
 
 
-
-# 21.05.02 version.
-
-def countWord(q):
-    cnt = len(q[0]) + len(str(q[1])) if q[1] > 1 else len(q[0])
-    return cnt
-def solution(s):
-    cnts = []
-    for n in range(1, len(s)//2+1):  # sliding window 1, ..., len(s)//2
-        q = ['', 0] # repeat / count
-        n_word = 0
-        for k in range(0, len(s), n):
-            c = s[k:k+n]
-            if q[0] != c:
-                n_word += countWord(q)
-                q = [c,1]
-            else:
-                q[1] += 1
-        n_word += countWord(q)
-        cnts.append(n_word)
-    return min(cnts + [len(s)])
