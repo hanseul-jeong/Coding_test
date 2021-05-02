@@ -1,3 +1,26 @@
+# 21.05.03 dfs version.
+def dfs(i, n):
+    global Computers, networks
+    networks.append(i)
+    for j in Computers[i]:
+        if j in networks: continue
+        dfs(j, n)
+
+Computers = None
+networks = None
+def solution(n, computers):
+    global Computers, networks
+    networks = []
+    Computers = [[j for j in range(n) if c[j] and i != j] for i, c in enumerate(computers)]
+    cnt = 0
+    for i in range(n):
+        if i in networks:
+            continue
+        dfs(i, n)
+        cnt += 1
+    return cnt
+
+# previous version.
 def union(networks, i,j):
     for idx in range(len(networks)):
         if networks[idx] == j:
