@@ -7,24 +7,28 @@ Figure 1에 나와있는 것 처럼, 순열 그래프 (3, 2, 7, 8, 1, 4, 5, 6) �
 
 N개의 정수로 이루어진 순열이 주어졌을 때, 순열 사이클의 개수를 구하는 프로그램을 작성하시오.
 '''
-
 import sys
+
+def dfs(st, graph, visited):
+    stack = [st]
+    while stack:
+        top = stack.pop()
+        visited[top] = 1
+        ch = graph[top]
+        if ch in stack or visited[ch]: continue
+        stack.append(ch)
+    return visited
 
 n_test = int(sys.stdin.readline())
 for _ in range(n_test):
     n = int(sys.stdin.readline())
-    graph = {g: i+1 for i, g in enumerate(list(map(int, sys.stdin.readline().split())))}
-    dones = []
-    def dfs(i, graph):
-        if i in dones:
-            return
-        dones.append(i)
-        dfs(graph[i], graph)
+    graph = {i+1:g for i, g in enumerate(list(map(int, sys.stdin.readline().split())))}
+    visited = [0 for _ in range(n+1)]
     cnt = 0
     for i in range(1, n+1):
-        q = []
-        if i in dones:continue
-        dfs(i, graph)
+        if visited[i]:continue
+        visited = dfs(i, graph, visited)
         cnt += 1
     print(cnt)
+
 
