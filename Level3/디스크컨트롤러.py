@@ -1,21 +1,3 @@
-def solution(jobs):
-    import heapq as hp
-    task_n = len(jobs)
-    hp.heapify(jobs)
-    dp = []
-    time = jobs[0][0]
-    answer = 0
-    while(jobs or dp):  # waiting operation
-        while(jobs and jobs[0][0]<=time):   # add candidates
-            (t, d) = hp.heappop(jobs)
-            hp.heappush(dp, (d, t)) # sort by elapse time
-        (d, t) = hp.heappop(dp) # shortest job
-        answer += d + max(0, time - t)  # elapsed time + waiting time
-        time = d + max(time, t) # finish time
-        if len(dp)==0 and jobs and time < jobs[0][0]:   # non-overlaped job
-            time = jobs[0][0]
-    return answer//task_n
-    
     
     """
     하드디스크는 한 번에 하나의 작업만 수행할 수 있습니다. 디스크 컨트롤러를 구현하는 방법은 여러 가지가 있습니다. 가장 일반적인 방법은 요청이 들어온 순서대로 처리하는 것입니다.
@@ -53,3 +35,49 @@ jobs의 각 행은 하나의 작업에 대한 [작업이 요청되는 시점, �
 각 작업에 대해 작업의 소요시간은 1 이상 1,000 이하입니다.
 하드디스크가 작업을 수행하고 있지 않을 때에는 먼저 요청이 들어온 작업부터 처리합니다.
 """
+
+
+from collections import deque
+import heapq
+
+def solution(jobs):
+    n_jobs = len(jobs)
+    jobs = deque(sorted(jobs))
+    time_complex = 0
+    cur = 0
+    while jobs:
+        time, duration = jobs.popleft()
+        cur = max(cur, time)
+        ends = cur + duration
+        queue = []
+        while jobs:
+            j = jobs.popleft()
+            if j[0] > ends:
+                jobs.appendleft(j)
+                break
+            heapq.heappush(queue, (j[1], j))
+        jobs.extendleft(list(map(lambda x:x[1], queue))[::-1])  # when insert value by using extendleft, the order of elements is reversed.
+        cur = ends
+        time_complex += ends - time
+    return int(time_complex / n_jobs)
+
+
+# previous version.
+def solution(jobs):
+    import heapq as hp
+    task_n = len(jobs)
+    hp.heapify(jobs)
+    dp = []
+    time = jobs[0][0]
+    answer = 0
+    while(jobs or dp):  # waiting operation
+        while(jobs and jobs[0][0]<=time):   # add candidates
+            (t, d) = hp.heappop(jobs)
+            hp.heappush(dp, (d, t)) # sort by elapse time
+        (d, t) = hp.heappop(dp) # shortest job
+        answer += d + max(0, time - t)  # elapsed time + waiting time
+        time = d + max(time, t) # finish time
+        if len(dp)==0 and jobs and time < jobs[0][0]:   # non-overlaped job
+            time = jobs[0][0]
+    return answer//task_n
+    
