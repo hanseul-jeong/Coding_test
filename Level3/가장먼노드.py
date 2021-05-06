@@ -8,7 +8,40 @@ n개의 노드가 있는 그래프가 있습니다. 각 노드는 1부터 n까�
 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
 vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
 '''
+from collections import deque, Counter
 
+def bfs(st, n, graph):
+    stack = deque([[st,0]])
+    checked = [0 for _ in range(n+1) ]
+    max_ = 0
+    cnts = 0
+    while stack:
+        idx, cnt = stack.popleft()
+        if max_ < cnt:
+            max_ = cnt
+            cnts = 1
+        else:
+            cnts+=1    
+        for g in graph[idx]:
+            if checked[g] or g == 1: continue
+            stack.append([g, cnt+1])
+            checked[g] = cnt+1      # stack에 넣을 때, 바로 check하면 stack을 따로 검사해야하는 비용 감소
+    return cnts
+
+def solution(n, edge):
+    graph = {}
+    for i, j in edge:
+        if i not in graph.keys():
+            graph[i] = []
+        if j not in graph.keys():
+            graph[j] = []
+        graph[i].append(j)
+        graph[j].append(i)
+
+    return bfs(1, n, graph)
+
+
+# previous version.
 
 from collections import deque, Counter
 
