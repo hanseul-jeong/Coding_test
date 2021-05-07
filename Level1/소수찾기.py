@@ -9,7 +9,26 @@ numbers는 0~9까지 숫자만으로 이루어져 있습니다.
 013은 0, 1, 3 숫자가 적힌 종이 조각이 흩어져있다는 의미입니다.
 """
 
+def prime_list(n):  #에라토스테네스의 체
+    primes = [False, False] + ([True] * (n))    # 0 and 1 is not prime
+    for i in range(2, int(n ** 0.5) + 1):
+        if not primes[i]: continue
+        for j in range(i*2, n, i):
+            primes[j] = False
+    return primes
+def solution(numbers):
+    from itertools import permutations
+    from functools import reduce
 
+    combs = [[str(int(''.join(comb))) for comb in list(permutations(numbers, i))] for i in range(1, len(numbers)+1)]  # [['1', '2', '3'],['12', '13', '23'], ['123']]
+    total_combs = set(list(reduce(lambda x, y: x+y, combs)))
+
+    bool_primes = prime_list(int(''.join(['9']*len(numbers))))  # 최댓값 자리수 따라서 에라토스테네스의 체 적용
+    return sum([bool_primes[int(n)] for n in total_combs])
+
+
+
+# previous version.
 def find_pri(maximum):
     primes = [1]*(maximum+1)
     for i in range(2, maximum+1):
