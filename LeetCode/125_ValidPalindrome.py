@@ -23,7 +23,7 @@ s consists only of printable ASCII characters.
 class Solution:
     def isPalindrome(self, s: str) -> bool:
         # leave only alphabets and numbers
-        alpha_str = [st.lower() for st in s if st.isalpha() or st.isnumeric()]
+        alpha_str = [st.lower() for st in s if st.isalpha() or st.isnumeric()] ## st.isalnum() : Check st is in [alphabet, number] simultaneously.
         for i in range(len(alpha_str) // 2):
             if alpha_str[i] != alpha_str[-(i + 1)]:
                 return False
