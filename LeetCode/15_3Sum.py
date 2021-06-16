@@ -27,12 +27,22 @@ Constraints:
 
 class Solution:
     def threeSum(self, nums: List[int]) -> List[List[int]]:
-        # nums.sort()
+        nums.sort()
         results = []
-        for i in range(len(nums)-2):
-            for j in range(i+1, len(nums)-1):
-                for k in range(j+1, len(nums)):
-                    cand = [nums[i], nums[j], nums[k]]
-                    if sum(cand) == 0 and sorted(cand) not in results:
-                        results.append(sorted(cand))
+        if len(nums) < 2: return results
+        for i in range(len(nums) - 2):
+            # remove repetition
+            if i > 0 and nums[i - 1] == nums[i]: continue
+            left, right = i + 1, len(nums)-1
+            while left < right:
+                cand = [nums[i], nums[left], nums[right]]
+                if sum(cand) == 0:
+                    # remove repetition
+                    if not ((left > i + 1 and nums[left - 1] == nums[left]) or (
+                            right < len(nums)-1 and nums[right + 1] == nums[right])):
+                        results.append(cand)
+                if sum(cand) >= 0:
+                    right -= 1
+                else:
+                    left += 1
         return results
