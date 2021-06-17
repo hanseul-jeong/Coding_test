@@ -29,20 +29,20 @@ It is guaranteed that the list represents a number that does not have leading ze
 '''
 class Solution:
     def addTwoNumbers(self, l1: ListNode, l2: ListNode) -> ListNode:
-        def addLinked(l1, l2, n_raise=0):
+        def addLinked(l1, l2, carry=0):
             # l1 and l2 is None
             if not (l1 or l2):
-                # 올림이 있을 경우
-                if n_raise != 0: return ListNode(n_raise)
+                # carry is not zero,
+                if carry != 0: return ListNode(carry)
                 return l1
             if l1 is None: 
                 l1, l2 = l2, l1
             t1 = 0 if l1 is None else l1.val
             t2 = 0 if l2 is None else l2.val
-            cand = (t1 + t2 + n_raise)
-            l1.val, n_raise = cand % 10, cand // 10
+            cand = (t1 + t2 + carry)
+            l1.val, carry = cand % 10, cand // 10
             l1_ = l1 if l1 is None else l1.next
             l2_ = l2 if l2 is None else l2.next
-            l1.next = addLinked(l1_, l2_, n_raise)
+            l1.next = addLinked(l1_, l2_, carry)
             return l1
         return addLinked(l1, l2)
