@@ -27,12 +27,14 @@ class Solution:
         warmer_days = [0]*len(temperatures)
         queue = []
         for i, t in enumerate(temperatures):
-            if not queue : queue.append((t, i))
-            else:
-                while queue:
-                    top_t, top_i = queue.pop()
-                    if top_t > t:
-                        queue.extend([(top_t, top_i), (t, i)])
-                        break
-                    warmer_days[top_i] = i - top_i
+            if not queue : 
+                queue.append((t, i))
+                continue
+            while queue:
+                top_t, top_i = queue.pop()
+                if top_t >= t:
+                    queue.append((top_t, top_i))
+                    break
+                warmer_days[top_i] = i - top_i
+            queue.append((t, i))
         return warmer_days
