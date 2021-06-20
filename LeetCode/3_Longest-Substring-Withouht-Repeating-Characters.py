@@ -30,7 +30,21 @@ Constraints:
 0 <= s.length <= 5 * 104
 s consists of English letters, digits, symbols and spaces.
 '''
+# two pointer way
+class Solution:
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        if len(s) <= 1: return len(s)
+        max_length = 1
+        i,j = 0, 0
+        while i < len(s)-1:
+            max_length = (j+1 - i) if (j+1 - i) > max_length else max_length 
+            if j < len(s)-1 and s[j+1] not in [s[idx] for idx in range(i, j+1)]: j+=1
+            else:
+                i += 1
+        return max_length
 
+
+# previous
 class Solution:
     def lengthOfLongestSubstring(self, s: str) -> int:
         if len(s) <= 1: return len(s)
