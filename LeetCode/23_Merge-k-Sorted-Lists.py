@@ -37,8 +37,28 @@ k == lists.length
 lists[i] is sorted in ascending order.
 The sum of lists[i].length won't exceed 10^4.
 '''
+# using priority queue
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        # remove empty linked lists
+        lists = [l for l in lists if l is not None]
+        if lists == [] :
+            return None
+        heap = [(lists[i].val, i, lists[i]) for i in range(len(lists))]
+        heapq.heapify(heap)
+        prev = root = ListNode(0)
+        while heap:
+            top_v, top_i, top_n = heapq.heappop(heap)
+            prev.next = top_n
+            prev = prev.next
+            top_n = top_n.next
+            if top_n:
+                heapq.heappush(heap, (top_n.val, top_i, top_n))
+        return root.next
 
 
+
+# previous
 class Solution:
     def mergeKLists(self, lists: List[ListNode]) -> ListNode:
         # remove empty linked lists
