@@ -33,9 +33,11 @@ fromi != toi
 
 class Solution:
     def findItinerary(self, tickets: List[List[str]]) -> List[str]:
+        # find route in an ascending order
         tickets.sort()
         visited = []
         def dfs(prev, lefts):
+            # if the route is founded,
             if visited : return
             if not lefts:
                 visited.append(prev)
@@ -47,6 +49,9 @@ class Solution:
                     dfs(prev + [lefts[ix]], lefts[:ix] + lefts[ix+1:])
             return
         for ix in range(len(tickets)):
+            # start with the ticket of which departure is 'JFK'
             if tickets[ix][0] == 'JFK':
                 dfs([tickets[ix]], tickets[:ix] + tickets[ix+1:])
-        return [t[0] for t in visited[0] + [visited[0][-1][::-1]]]
+        # make route from tickets (t1:(st, ed), t2:(st, ed), ..., tt(st, ed), tt(ed, st) )
+        # -> (t1:(st), t2(st), ..., tt(st), tt(ed))
+        return [st for st, ed in visited[0] + [visited[0][-1][::-1]]]
