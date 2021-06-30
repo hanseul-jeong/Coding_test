@@ -9,8 +9,6 @@ Return the merged tree.
 
 Note: The merging process must start from the root nodes of both trees.
 
- 
-
 Example 1:
 
 
