@@ -36,8 +36,21 @@ The number of nodes in the tree is in the range [1, 100].
 All the values in the tree are unique.
 root is guaranteed to be a valid binary search tree.
 '''
+# recursive way
+class Solution:
+    def __init__(self):
+        self.val = 0
+    def bstToGst(self, root: TreeNode) -> TreeNode:
+        if not root: return None
+        if root.right:
+            self.bstToGst(root.right)
+        self.val += root.val
+        root.val = self.val
+        root.left = self.bstToGst(root.left)
+        return root
 
 
+# mine
 class Solution:
     def bstToGst(self, root: TreeNode) -> TreeNode:
         def getRight(node):
