@@ -26,8 +26,39 @@ Constraints:
 The number of nodes in the list is in the range [0, 5 * 104].
 -105 <= Node.val <= 105
 '''
+# merge sort (linked list)
+class Solution:
+    def __init__(self):
+        self.stack = []
+    def sortList(self, head: ListNode) -> ListNode:
+        if not head or not head.next: return head
+        half, slow, fast = None, head, head
+        while fast and fast.next:
+            half = slow
+            slow = slow.next
+            fast = fast.next.next
+        left, right = head, half.next
+        half.next = None
+        l1 = self.sortList(left)
+        l2 = self.sortList(right)
+        return self.mergesort(l1, l2)
+
+    def mergesort(self, left, right):
+        root, l, r = ListNode(-1), left, right
+        node = root
+        while l and r:
+            if l.val < r.val:
+                node.next = l
+                l = l.next
+            else:
+                node.next = r
+                r = r.next
+            node = node.next
+        node.next = l if not r else r
+        return root.next
 
 
+# previous -> It exceeds time limit
 class Solution:
     def __init__(self):
         self.prev = None
