@@ -43,4 +43,4 @@ class Solution:
         nums = nums[p:] + nums[:p]
         idx = bisect.bisect_left(nums, target)
         index = idx+p if idx < len(nums) and nums[idx] == target else -1
-        return index if index < len(nums) else index - len(nums)
+        return index % len(nums)
