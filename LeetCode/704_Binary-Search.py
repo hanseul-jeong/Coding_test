@@ -25,18 +25,15 @@ All the integers in nums are unique.
 nums is sorted in ascending order.
 '''
 
-
 class Solution:
     def search(self, nums: List[int], target: int) -> int:
         i, j = 0, len(nums)-1
         if nums[0] == target: return 0
-        while i != j and i < j:
-            p = (i+j+1)//2
+        while i <= j:
+            p = (i+j)//2
             if nums[p] == target: return p
             if nums[p] > target:
-                if j == p: break
-                j = p
+                j = p-1
             else:
-                if i == p: break
-                i = p
+                i = p+1
         return -1
