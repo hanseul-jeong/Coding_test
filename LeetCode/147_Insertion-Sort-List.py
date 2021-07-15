@@ -28,11 +28,14 @@ Constraints:
 The number of nodes in the list is in the range [1, 5000].
 -5000 <= Node.val <= 5000
 '''
+
 # book version (python algorithm inverview)
 class Solution:
     def insertionSortList(self, head: ListNode) -> ListNode:
         cursor = node = ListNode(None)
         while head:
+            # It highly reduces execution time (1/10)
+            if cursor.val and cursor.val > head.val: cursor = node
             while cursor.next and cursor.next.val < head.val:
                 cursor = cursor.next
             cursor.next, head.next, head = head, cursor.next, head.next
