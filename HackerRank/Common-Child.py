@@ -10,3 +10,4 @@ def commonChild(s1, s2):
             else:
                 commons[i].append(max(commons[i-1][j], commons[i][j-1]))
     return commons[-1][-1]
+
