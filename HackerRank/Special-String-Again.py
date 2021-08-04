@@ -1,3 +1,4 @@
+
 def substrCount(n, s):
     from collections import deque
     n_special = n
