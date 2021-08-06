@@ -8,6 +8,29 @@ n개의 노드가 있는 그래프가 있습니다. 각 노드는 1부터 n까�
 간선은 양방향이며 총 1개 이상 50,000개 이하의 간선이 있습니다.
 vertex 배열 각 행 [a, b]는 a번 노드와 b번 노드 사이에 간선이 있다는 의미입니다.
 '''
+# latest version
+def solution(n, edge):
+    from collections import defaultdict, deque
+    graphs = defaultdict(list)
+    for st, ed in edge:
+        graphs[st].append(ed)
+        graphs[ed].append(st)
+    visited = [0, 1] + [0 for _ in range(n-1)]
+    queue = deque([[1, 0]])
+    max_dist, n_nodes = 0, -1
+    while queue:
+        node, dist = queue.popleft()
+        if dist > max_dist:
+            max_dist, n_nodes = dist, 1
+        elif dist == max_dist:
+            n_nodes += 1
+        for g in graphs[node]:
+            if not visited[g]:
+                queue.append([g, dist+1])
+                visited[g] = 1
+    return n_nodes
+
+
 from collections import deque, Counter
 
 def bfs(st, n, graph):
