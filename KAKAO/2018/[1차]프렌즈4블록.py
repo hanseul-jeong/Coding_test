@@ -50,22 +50,25 @@ def solution(m, n, board):
                     if x != cursor+1:
                         board[cursor] = board[cursor][:y] + board[x][y] + board[cursor][y+1:]
                     cursor -= 1
+            # erase left blocks
             for c in range(cursor, -1, -1):
                 board[c] = board[c][:y] + ' ' + board[c][y+1:]
         return len(erase_ix)
     answer = 0
-    changed = 1
-    while changed:
+    while True:
         erase_ix = set()
         for y in range(n-1,0,-1):
             for x in range(m - 1, 0, -1):
                 target = board[x][y]
+                # the end of row
                 if target == ' ': break
                 erase = True
+                # check whether blocks are erased or not
                 for dx, dy in [(-1,0), (0,-1), (-1,-1)]:
                     if board[x+dx][y+dy] != target:
                         erase = False
                         break
+                # get indice of erased blocks
                 if erase:
                     for dx, dy in [(0,0), (-1, 0), (0, -1), (-1, -1)]:
                         erase_ix.add((x+dx, y+dy))
