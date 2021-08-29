@@ -23,6 +23,33 @@
 출력
 수빈이가 집에 가는 가장 빠른 시간을 출력한다.
 '''
+# check all teleport-use ways with brute-force
+import sys
+from collections import defaultdict
+from itertools import permutations
+
+xs, ys = map(int, sys.stdin.readline().split())
+xe, ye = map(int, sys.stdin.readline().split())
+m_route = abs(xe-xs) + abs(ye-ys)
+
+tels = defaultdict(tuple)
+for i in range(3):
+    x1, y1, x2, y2 = list(map(int, sys.stdin.readline().split()))
+    tels[(x1, y1)], tels[(x2, y2)] = (x2, y2), (x1, y1)
+
+for n in range(1,4):
+    for q in list(permutations(tels.keys(),n)):
+        x, y, cnt = xs, ys, 0
+        for xt, yt in q:
+            new_x, new_y = tels[(xt, yt)]
+            if abs(xt-x) + abs(yt-y) + 10 < abs(new_x-x) + abs(new_y-y):
+                cnt += abs(xt-x) + abs(yt-y) + 10
+                x, y = new_x, new_y
+            else:
+                cnt = m_route
+                break
+        m_route = cnt + abs(xe-x) + abs(ye-y) if cnt + abs(xe-x) + abs(ye-y) < m_route else m_route
+print(m_route)
 
 # It exceeds time limit
 import sys
