@@ -33,6 +33,28 @@
 가장 처음에 파이프는 (1, 1)와 (1, 2)를 차지하고 있고, 방향은 가로이다. 파이프의 한쪽 끝을 (N, N)로 이동시키는 방법의 개수를 구해보자.
 '''
 
+# DP
+import sys
+N = int(sys.stdin.readline())
+dev = {'hor':(0,1,'hor'),'ang':(1,1,'ang'),'ver':(1,0,'ver')}
+house = []
+dp = [[{'hor':0, 'ang':0, 'ver':0} for _ in range(N+1)]]
+for x in range(N):
+    house.append(list(map(int, sys.stdin.readline().split())))
+    dp.append([{'hor':0, 'ang':0, 'ver':0} for _ in range(N+1)])
+
+dp[1][2]['hor'] = 1
+
+for x in range(1, N+1):
+    for y in range(1, N+1):
+        if (x, y) in [(1, 1), (1, 2)]: continue
+        if not house[x-1][y-1]:
+            dp[x][y]['hor'] = dp[x][y-1]['hor'] + dp[x][y-1]['ang']
+            dp[x][y]['ver'] = dp[x-1][y]['ver'] + dp[x-1][y]['ang']
+            if not (house[x-2][y-1] or house[x-1][y-2]):
+                dp[x][y]['ang'] = dp[x-1][y-1]['hor'] + dp[x-1][y-1]['ang'] + dp[x-1][y-1]['ver']
+
+print(sum(list(dp[N][N].values())))
 
 
 # It exceeds time limit
