@@ -9,6 +9,57 @@
 number는 1자리 이상, 1,000,000자리 이하인 숫자입니다.
 k는 1 이상 number의 자릿수 미만인 자연수입니다.
 """
+
+# heapq
+def solution(number, k):
+    import heapq as hq
+    answer, q = '', []
+    cnt, left = k, 0
+    for i, n in enumerate(number):
+        hq.heappush(q, (-int(n), i))
+        if i < left + cnt: continue
+        while q:
+            node, idx = hq.heappop(q)
+            # removed numbers
+            if idx < left: continue
+            # new number
+            answer += str(-node)
+            k -= (idx - left)
+            cnt = k
+            left = idx + 1
+            break
+        if not k: break
+
+    return answer + number[left:] if not k else answer
+
+# exceeds time limit (list indexing)
+def solution(number, k):
+    answer = ''
+    while k:
+        m = max(number[:k+1])
+        answer += m
+        idx = number.index(m)
+        number = number[idx+1:]
+        k -= idx
+    return answer + number
+
+# exceeds time limit (two pointer)
+def solution(number, k):
+    answer = ''
+    left, right = 0, 0
+    pivot=0
+    while k:
+        if (right - pivot) == k:
+            answer += number[left]
+            k -= (left-pivot)
+            left += 1
+            right, pivot = left, left
+        else:
+            right += 1
+            if number[left] < number[right]:
+                left = right
+    return answer + number[left:]
+
 # 21.05.02 version 아직.. 시간초과로 33점
 
 def solution(number, k):
@@ -18,6 +69,8 @@ def solution(number, k):
     cands = list(combinations(numbers, len(numbers) - k))
     cands = list(set([''.join([y[0] for y in cand]) for cand in cands]))
     return str(max(map(int, cands)))
+
+        
 
 # test 10 제한시간 초과 ###########################################
 # def get_max(str):
