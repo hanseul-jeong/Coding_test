@@ -18,6 +18,7 @@
 '''
 
 
+
 # greedy
 import sys
 N, candies = int(sys.stdin.readline()), []
