@@ -11,6 +11,27 @@ n가지 종류의 동전이 있다. 이 동전들을 적당히 사용해서, 그
 첫째 줄에 사용한 동전의 최소 개수를 출력한다. 불가능한 경우에는 -1을 출력한다.
 '''
 
+# Reducing redundant if statements is helpful (Python3 passed)
+import sys
+n, k = map(int, sys.stdin.readline().split())
+coins = []
+for _ in range(n):
+    c = int(sys.stdin.readline())
+    # k 초과 coin 제외
+    if c > k: continue
+    coins.append(c)
+# 이전 (i-1)-th까지의 코인을 이용해서 j값을 만드는 방법의 갯수
+dp = [[k+1]*(k+1)]
+for i in range(1, len(coins)+1):
+    dp.append([])
+    for j in range(k+1):
+        dp[i].append(dp[i-1][j])
+        if j < coins[i-1]: continue
+        if j == coins[i-1]: dp[i][j] = 1
+        dp[i][j] = min(dp[i][j], dp[i][j-coins[i-1]]+1)
+print(dp[len(coins)][k] if dp[len(coins)][k] != k+1 else -1)
+
+
 # Using python3 exceeds time limit, but it can be accepted by using pypy3
 import sys
 n, k = map(int, sys.stdin.readline().split())
