@@ -13,7 +13,7 @@ N×N 게임판에 수가 적혀져 있다. 이 게임의 목표는 가장 왼쪽
 가장 왼쪽 위 칸에서 가장 오른쪽 아래 칸으로 문제의 규칙에 맞게 갈 수 있는 경로의 개수를 출력한다. 경로의 개수는 263-1보다 작거나 같다.
 '''
 
-
+# priority queue + dfs
 import sys
 import heapq as hq
 n = int(sys.stdin.readline())
