@@ -24,7 +24,16 @@ dž는 무조건 하나의 알파벳으로 쓰이고, d와 ž가 분리된 것�
 입력으로 주어진 단어가 몇 개의 크로아티아 알파벳으로 이루어져 있는지 출력한다.
 '''
 
+# modified
+import sys
+croatia = ['c=', 'c-', 'dz=','z=', 'd-', 'lj','nj','s=']
+input = sys.stdin.readline().rstrip()
+for c in croatia:
+    input = input.replace(c, '^')
+print(len(input))
 
+
+# previous
 import sys
 from collections import deque, defaultdict
 cro = defaultdict(int)
