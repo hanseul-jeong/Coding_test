@@ -22,6 +22,33 @@
 첫째 줄에 모든 폭발이 끝난 후 남은 문자열을 출력한다.
 '''
 
+# I checked "algoritm category" in boj
+import sys
+from collections import deque, defaultdict
+seq = deque(map(str, sys.stdin.readline().rstrip()))
+b = sys.stdin.readline().rstrip()
+bomb = defaultdict(int, {b[i]:i+1 for i in range(len(b))})
+
+left, tmp = [], []
+while seq:
+    ch = seq.popleft()
+    if bomb[ch]:
+        # first or next character
+        if bomb[ch] == 1 or (tmp and bomb[tmp[-1]]+1 == bomb[ch]):
+            tmp.append(ch)
+        else:
+            left.extend(tmp+[ch])
+            tmp = []
+    else:
+        left.extend(tmp+[ch])
+        tmp = []
+
+    if tmp and bomb[tmp[-1]] == len(b):
+        for _ in range(len(b)):
+            tmp.pop()
+answer = left+tmp
+print('FRULA' if not answer else ''.join(answer))
+
 
 
 # It exceeds time limit
