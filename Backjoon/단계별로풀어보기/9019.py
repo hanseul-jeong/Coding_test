@@ -40,7 +40,6 @@ def operate(num, i):
     # R
     return int(tmp[-1] + tmp[:-1])
 
-
 DSLR = {0:'D', 1:'S', 2:'L', 3:'R'}
 for _ in range(t):
     a, b = map(int, sys.stdin.readline().split())
