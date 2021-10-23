@@ -27,7 +27,6 @@ A에서 B로 변환하기 위해 필요한 최소한의 명령어 나열을 출�
 
 
 
-
 # PyPy3
 import sys
 from collections import deque
